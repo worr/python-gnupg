@@ -595,7 +595,12 @@ class GPGBase(object):
 
         return subprocess.Popen(cmd, shell=expand_shell, stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                env={'LANGUAGE': 'en'})
+                                env={'LANGUAGE': 'en',
+                                     'GPG_AGENT_INFO':
+                                        os.getenv('GPG_AGENT_INFO'),
+                                     'GPG_TTY': os.getenv('GPG_TTY'),
+                                     'GPG_PINENTRY_PATH':
+                                        os.getenv('GPG_PINENTRY_PATH')})
 
     def _read_response(self, stream, result):
         """Reads all the stderr output from GPG, taking notice only of lines
